@@ -31,6 +31,8 @@
 </div>
 
 <!-- 👕 PRODUITS -->
+<?php
+/*
 <div class="container">
     <h2 class="text-center mb-4">Nos Produits</h2>
 
@@ -60,6 +62,8 @@
 
     </div>
 </div>
+*/
+?>
 
 </body>
 </html>
