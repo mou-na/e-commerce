@@ -1,91 +1,8 @@
 <?php
-include("config/db.php");
-
-?>
-
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Sign Up</title>
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-</head>
-
-<body class="bg-light">
-
-<nav class="navbar navbar-dark bg-dark px-3">
-    <a class="navbar-brand" href="index.php">🛒 Fashion Shop</a>
-</nav>
-
-<div class="container mt-5">
-<div class="row justify-content-center">
-<div class="col-md-6">
-
-<div class="card shadow-lg border-0 rounded-4">
-<div class="card-body p-4">
-
-<h3 class="text-center mb-4">📝 Create Account</h3>
-
-<form method="POST" enctype="multipart/form-data">
-
-<!-- FIRST + LAST NAME -->
-<div class="row">
-    <div class="col-md-6 mb-3">
-        <label>First Name</label>
-        <input type="text" name="firstname" class="form-control" required>
-    </div>
-
-    <div class="col-md-6 mb-3">
-        <label>Last Name</label>
-        <input type="text" name="lastname" class="form-control" required>
-    </div>
-</div>
-
-<!-- USERNAME -->
-<div class="mb-3">
-    <label>Username</label>
-    <div class="input-group">
-        <span class="input-group-text"><i class="bi bi-person"></i></span>
-        <input type="text" name="username" class="form-control" placeholder="john_doe" required>
-    </div>
-</div>
-
-<!-- PHONE -->
-<div class="mb-3">
-    <label>Phone</label>
-    <div class="input-group">
-        <span class="input-group-text"><i class="bi bi-telephone"></i></span>
-        <input type="text" name="phone" class="form-control" required>
-    </div>
-</div>
-
-<!-- PASSWORD -->
-<div class="mb-3">
-    <label>Password</label>
-    <div class="input-group">
-        <span class="input-group-text"><i class="bi bi-lock"></i></span>
-        <input type="password" name="password" class="form-control" required>
-    </div>
-</div>
-
-<!-- PHOTO -->
-<div class="mb-3">
-    <label>Profile Photo</label>
-    <input type="file" name="photo" class="form-control" required>
-</div>
-
-<button type="submit" class="btn btn-success w-100">
-    <i class="bi bi-person-plus"></i> Create Account
-</button>
-
-</form>
-
-<?php
-include("config/db.php");
 session_start();
+include("config/db.php");
 
-if ($_POST) {
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $firstname = $_POST['firstname'];
     $lastname = $_POST['lastname'];
@@ -98,25 +15,134 @@ if ($_POST) {
 
     move_uploaded_file($tmp, "uploads/".$photo);
 
-    $conn->query("INSERT INTO users(firstname,lastname,username,phone,password,photo)
-    VALUES('$firstname','$lastname','$username','$phone','$password','$photo')");
+    $stmt = $conn->prepare("INSERT INTO users(firstname,lastname,username,phone,password,photo)
+    VALUES(?,?,?,?,?,?)");
 
-    // ✅ SUCCESS ALERT + REDIRECT
-    echo "<script>
-            alert('✔ Account created successfully');
-            window.location.href = 'login.php';
-          </script>";
+    $stmt->bind_param("ssssss",$firstname,$lastname,$username,$phone,$password,$photo);
+    $stmt->execute();
+
+    header("Location: login.php");
+    exit;
 }
 ?>
 
-<hr>
+<!DOCTYPE html>
+<html>
+<head>
+<title>Register</title>
 
-<a href="login.php" class="btn btn-primary w-100">🔐 Go to Login</a>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{
+    font-family:'Segoe UI',sans-serif;
+    background:#0f0f10;
+    color:#e5e5e5;
+}
+
+.navbar{
+    height:60px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 40px;
+    border-bottom:1px solid #1f1f22;
+}
+.logo{font-weight:600;}
+.navbar a{color:#aaa;text-decoration:none;}
+.navbar a:hover{color:#fff;}
+
+.container{
+    min-height:calc(100vh - 60px);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.card{
+    width:100%;
+    max-width:450px;
+    background:#18181b;
+    padding:30px;
+    border-radius:12px;
+    border:1px solid #262626;
+    box-shadow:0 10px 30px rgba(0,0,0,.4);
+}
+
+.title{font-size:22px;font-weight:600;}
+.subtitle{font-size:13px;color:#888;margin-bottom:20px;}
+
+.input{
+    width:100%;
+    padding:11px;
+    margin-bottom:12px;
+    border-radius:8px;
+    border:1px solid #2a2a2e;
+    background:#111;
+    color:#fff;
+}
+
+.input:focus{
+    outline:none;
+    border-color:#4f46e5;
+    box-shadow:0 0 0 2px rgba(79,70,229,.2);
+}
+
+.btn{
+    width:100%;
+    padding:11px;
+    background:#4f46e5;
+    border:none;
+    border-radius:8px;
+    color:#fff;
+    cursor:pointer;
+}
+
+.btn:hover{background:#4338ca;}
+
+.footer{
+    margin-top:15px;
+    text-align:center;
+    font-size:13px;
+    color:#888;
+}
+.footer a{color:#fff;text-decoration:none;}
+</style>
+</head>
+
+<body>
+
+<div class="navbar">
+    <div class="logo">🛒 Fashion Shop</div>
+    <a href="login.php">Login</a>
+</div>
+
+<div class="container">
+
+<div class="card">
+
+<div class="title">Create account</div>
+<div class="subtitle">Join us today</div>
+
+<form method="POST" enctype="multipart/form-data">
+
+<input class="input" type="text" name="firstname" placeholder="First name" required>
+<input class="input" type="text" name="lastname" placeholder="Last name" required>
+<input class="input" type="text" name="username" placeholder="Username" required>
+<input class="input" type="text" name="phone" placeholder="Phone" required>
+<input class="input" type="password" name="password" placeholder="Password" required>
+
+<input class="input" type="file" name="photo" required>
+
+<button class="btn">Create account</button>
+
+</form>
+
+<div class="footer">
+Already have an account? <a href="login.php">Login</a>
+</div>
 
 </div>
-</div>
-</div>
-</div>
+
 </div>
 
 </body>
