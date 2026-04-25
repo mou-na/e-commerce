@@ -1,10 +1,10 @@
 <?php
 session_start();
 
-
-if(!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin'){
-    die("Access denied");
+if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
+    die("Accès refusé");
 }
+
 include("config/db.php");
 
 /* GET ID */
@@ -22,7 +22,7 @@ $stmt->execute();
 $category = $stmt->get_result()->fetch_assoc();
 
 if (!$category) {
-    echo "Category not found";
+    echo "Catégorie introuvable";
     exit;
 }
 
@@ -39,266 +39,127 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $update->bind_param("sssi", $nom, $icon, $color, $id);
         $update->execute();
 
-        header("Location: index.php");
+        header("Location: admin/getcategorie.php");
         exit;
-
     } else {
-        $error = "Please fill all fields";
+        $error = "Veuillez remplir tous les champs";
     }
 }
 ?>
 
 <!DOCTYPE html>
 <html>
+
 <head>
-<meta charset="UTF-8">
-<title>Edit Category</title>
+    <meta charset="UTF-8">
+    <title>Modifier la catégorie</title>
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="css/indexnavbar.css">
+    <link rel="stylesheet" href="css/edit.css">
 
-<style>
-body{
-    background: linear-gradient(135deg,#f6f7fb,#eef1f7);
-    font-family: "Segoe UI", sans-serif;
-}
+    <style>
+        .preview {
+            text-align: center;
+            padding: 18px;
+            border-radius: 12px;
+            background: #f8f9fb;
+            margin-bottom: 15px;
+        }
 
-/* CENTER */
-.page{
-    min-height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    padding:20px;
-}
-
-/* CARD */
-.card-box{
-    width:480px;
-    background:#fff;
-    border-radius:16px;
-    padding:28px;
-    box-shadow:0 20px 50px rgba(0,0,0,0.08);
-    border:1px solid #eee;
-}
-
-/* HEADER */
-.header{
-    text-align:center;
-    margin-bottom:15px;
-}
-
-.header h3{
-    font-weight:700;
-}
-
-.header p{
-    font-size:13px;
-    color:#777;
-}
-
-/* PREVIEW */
-.preview{
-    text-align:center;
-    padding:18px;
-    border-radius:12px;
-    background:#f8f9fb;
-    margin-bottom:15px;
-}
-
-.preview i{
-    font-size:42px;
-    color: <?= htmlspecialchars($category['color']) ?>;
-}
-
-.preview span{
-    font-size:12px;
-    color:#777;
-}
-
-/* INPUTS */
-.form-control{
-    border-radius:10px;
-    padding:10px;
-    margin-bottom:10px;
-    border:1px solid #ddd;
-}
-
-.form-control:focus{
-    border-color:#6366f1;
-    box-shadow:none;
-}
-
-/* COLOR */
-input[type="color"]{
-    height:45px;
-}
-
-/* ICON GRID */
-.icon-grid{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:10px;
-    margin:12px 0 15px;
-}
-
-.icon-item{
-    font-size:20px;
-    padding:12px;
-    border-radius:10px;
-    background:#f3f4f6;
-    text-align:center;
-    cursor:pointer;
-    border:2px solid transparent;
-    transition:0.2s;
-}
-
-.icon-item:hover{
-    border-color:#6366f1;
-    transform:scale(1.05);
-}
-
-.icon-item.active{
-    border-color:#6366f1;
-    background:#eef2ff;
-    color:#4f46e5;
-}
-
-/* BUTTON */
-.btn-update{
-    width:100%;
-    padding:11px;
-    border:none;
-    border-radius:10px;
-    background:#111;
-    color:#fff;
-    font-weight:600;
-    transition:0.2s;
-}
-
-.btn-update:hover{
-    background:#333;
-}
-
-/* BACK */
-.back{
-    display:block;
-    text-align:center;
-    margin-top:12px;
-    font-size:13px;
-    color:#666;
-    text-decoration:none;
-}
-
-.back:hover{
-    color:#000;
-}
-
-/* ERROR */
-.error{
-    background:#fee2e2;
-    color:#b91c1c;
-    padding:10px;
-    border-radius:8px;
-    font-size:13px;
-    text-align:center;
-    margin-bottom:10px;
-}
-</style>
+        .preview i {
+            font-size: 42px;
+            color: <?= htmlspecialchars($category['color']) ?>;
+        }
+    </style>
 </head>
 
 <body>
 
-<div class="page">
+    <?php
+    $showBack = true;
+    $backLink = "admin/getcategorie.php";
+    include("includes/navbar.php");
+    ?>
 
-<div class="card-box">
+    <div class="page">
 
-    <div class="header">
-        <h3>Edit Category</h3>
-        <p>Update category information</p>
-    </div>
+        <div class="card-box">
 
-    <!-- PREVIEW -->
-    <div class="preview">
-        <i class="<?= htmlspecialchars($category['icon']) ?>"></i>
-        <span>Live preview</span>
-    </div>
+            <div class="header">
+                <h3>Modifier la catégorie</h3>
+                <p>Mettre à jour les informations de la catégorie</p>
+            </div>
 
-    <?php if(isset($error)) echo "<div class='error'>$error</div>"; ?>
+            <div class="preview">
+                <i class="<?= htmlspecialchars($category['icon']) ?>"></i>
+                <span>Aperçu en direct</span>
+            </div>
 
-    <form method="POST">
+            <?php if (isset($error)) echo "<div class='error'>$error</div>"; ?>
 
-        <!-- NAME -->
-        <input type="text"
-               name="nom"
-               class="form-control"
-               value="<?= htmlspecialchars($category['nom']) ?>"
-               placeholder="Category name">
+            <form method="POST">
 
-        <!-- COLOR -->
-        <input type="color"
-               name="color"
-               class="form-control"
-               value="<?= htmlspecialchars($category['color']) ?>">
+                <input type="text"
+                    name="nom"
+                    class="form-control"
+                    value="<?= htmlspecialchars($category['nom']) ?>"
+                    placeholder="Nom de la catégorie">
 
-        <!-- ICON SELECT -->
-        <input type="hidden" name="icon" id="iconInput"
-               value="<?= htmlspecialchars($category['icon']) ?>">
+                <input type="color"
+                    name="color"
+                    class="form-control"
+                    value="<?= htmlspecialchars($category['color']) ?>">
 
-        <p style="font-size:13px;color:#777;margin-top:10px;">Choose icon</p>
+                <input type="hidden" name="icon" id="iconInput"
+                    value="<?= htmlspecialchars($category['icon']) ?>">
 
-        <div class="icon-grid">
+                <p style="font-size:13px;color:#777;margin-top:10px;">Choisir une icône</p>
 
-            <i class="fa-solid fa-shirt icon-item <?= $category['icon']=='fa-solid fa-shirt'?'active':'' ?>" data-icon="fa-solid fa-shirt"></i>
+                <div class="icon-grid">
 
-            <i class="fa-solid fa-user icon-item <?= $category['icon']=='fa-solid fa-user'?'active':'' ?>" data-icon="fa-solid fa-user"></i>
+                    <i class="fa-solid fa-shirt icon-item <?= $category['icon'] == 'fa-solid fa-shirt' ? 'active' : '' ?>" data-icon="fa-solid fa-shirt"></i>
+                    <i class="fa-solid fa-user icon-item <?= $category['icon'] == 'fa-solid fa-user' ? 'active' : '' ?>" data-icon="fa-solid fa-user"></i>
+                    <i class="fa-solid fa-shoe-prints icon-item <?= $category['icon'] == 'fa-solid fa-shoe-prints' ? 'active' : '' ?>" data-icon="fa-solid fa-shoe-prints"></i>
+                    <i class="fa-solid fa-hat-cowboy icon-item <?= $category['icon'] == 'fa-solid fa-hat-cowboy' ? 'active' : '' ?>" data-icon="fa-solid fa-hat-cowboy"></i>
+                    <i class="fa-solid fa-bag-shopping icon-item <?= $category['icon'] == 'fa-solid fa-bag-shopping' ? 'active' : '' ?>" data-icon="fa-solid fa-bag-shopping"></i>
+                    <i class="fa-solid fa-glasses icon-item <?= $category['icon'] == 'fa-solid fa-glasses' ? 'active' : '' ?>" data-icon="fa-solid fa-glasses"></i>
+                    <i class="fa-solid fa-gem icon-item <?= $category['icon'] == 'fa-solid fa-gem' ? 'active' : '' ?>" data-icon="fa-solid fa-gem"></i>
+                    <i class="fa-solid fa-socks icon-item <?= $category['icon'] == 'fa-solid fa-socks' ? 'active' : '' ?>" data-icon="fa-solid fa-socks"></i>
 
-            <i class="fa-solid fa-shoe-prints icon-item <?= $category['icon']=='fa-solid fa-shoe-prints'?'active':'' ?>" data-icon="fa-solid fa-shoe-prints"></i>
+                </div>
 
-            <i class="fa-solid fa-hat-cowboy icon-item <?= $category['icon']=='fa-solid fa-hat-cowboy'?'active':'' ?>" data-icon="fa-solid fa-hat-cowboy"></i>
+                <button class="btn-update" type="submit">
+                    Mettre à jour
+                </button>
 
-            <i class="fa-solid fa-bag-shopping icon-item <?= $category['icon']=='fa-solid fa-bag-shopping'?'active':'' ?>" data-icon="fa-solid fa-bag-shopping"></i>
-
-            <i class="fa-solid fa-glasses icon-item <?= $category['icon']=='fa-solid fa-glasses'?'active':'' ?>" data-icon="fa-solid fa-glasses"></i>
-
-            <i class="fa-solid fa-gem icon-item <?= $category['icon']=='fa-solid fa-gem'?'active':'' ?>" data-icon="fa-solid fa-gem"></i>
-
-            <i class="fa-solid fa-socks icon-item <?= $category['icon']=='fa-solid fa-socks'?'active':'' ?>" data-icon="fa-solid fa-socks"></i>
+            </form>
 
         </div>
 
-        <button class="btn-update" type="submit">
-            Update Category
-        </button>
+    </div>
 
-    </form>
+    <script>
+        const icons = document.querySelectorAll(".icon-item");
+        const input = document.getElementById("iconInput");
+        const preview = document.querySelector(".preview i");
 
-    <a href="index.php" class="back">← Back to categories</a>
+        icons.forEach(icon => {
+            icon.addEventListener("click", () => {
 
-</div>
+                icons.forEach(i => i.classList.remove("active"));
 
-</div>
+                icon.classList.add("active");
 
-<!-- JS -->
-<script>
-const icons = document.querySelectorAll(".icon-item");
-const input = document.getElementById("iconInput");
-const preview = document.querySelector(".preview i");
+                const value = icon.getAttribute("data-icon");
+                input.value = value;
 
-icons.forEach(icon => {
-    icon.addEventListener("click", () => {
-
-        icons.forEach(i => i.classList.remove("active"));
-
-        icon.classList.add("active");
-
-        const value = icon.getAttribute("data-icon");
-        input.value = value;
-
-        preview.className = value;
-    });
-});
-</script>
+                preview.className = value;
+            });
+        });
+    </script>
 
 </body>
+
 </html>

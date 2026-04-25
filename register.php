@@ -13,12 +13,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $photo = $_FILES['photo']['name'];
     $tmp = $_FILES['photo']['tmp_name'];
 
-    move_uploaded_file($tmp, "uploads/".$photo);
+    move_uploaded_file($tmp, "uploads/" . $photo);
 
     $stmt = $conn->prepare("INSERT INTO users(firstname,lastname,username,phone,password,photo)
     VALUES(?,?,?,?,?,?)");
 
-    $stmt->bind_param("ssssss",$firstname,$lastname,$username,$phone,$password,$photo);
+    $stmt->bind_param("ssssss", $firstname, $lastname, $username, $phone, $password, $photo);
     $stmt->execute();
 
     header("Location: login.php");
@@ -28,122 +28,51 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <!DOCTYPE html>
 <html>
+
 <head>
-<title>Register</title>
+    <title>Register</title>
 
-<style>
-*{margin:0;padding:0;box-sizing:border-box;}
-body{
-    font-family:'Segoe UI',sans-serif;
-    background:#0f0f10;
-    color:#e5e5e5;
-}
-
-.navbar{
-    height:60px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    padding:0 40px;
-    border-bottom:1px solid #1f1f22;
-}
-.logo{font-weight:600;}
-.navbar a{color:#aaa;text-decoration:none;}
-.navbar a:hover{color:#fff;}
-
-.container{
-    min-height:calc(100vh - 60px);
-    display:flex;
-    justify-content:center;
-    align-items:center;
-}
-
-.card{
-    width:100%;
-    max-width:450px;
-    background:#18181b;
-    padding:30px;
-    border-radius:12px;
-    border:1px solid #262626;
-    box-shadow:0 10px 30px rgba(0,0,0,.4);
-}
-
-.title{font-size:22px;font-weight:600;}
-.subtitle{font-size:13px;color:#888;margin-bottom:20px;}
-
-.input{
-    width:100%;
-    padding:11px;
-    margin-bottom:12px;
-    border-radius:8px;
-    border:1px solid #2a2a2e;
-    background:#111;
-    color:#fff;
-}
-
-.input:focus{
-    outline:none;
-    border-color:#4f46e5;
-    box-shadow:0 0 0 2px rgba(79,70,229,.2);
-}
-
-.btn{
-    width:100%;
-    padding:11px;
-    background:#4f46e5;
-    border:none;
-    border-radius:8px;
-    color:#fff;
-    cursor:pointer;
-}
-
-.btn:hover{background:#4338ca;}
-
-.footer{
-    margin-top:15px;
-    text-align:center;
-    font-size:13px;
-    color:#888;
-}
-.footer a{color:#fff;text-decoration:none;}
-</style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="css/logreg.css">
+    <link rel="stylesheet" href="css/indexnavbar.css">
 </head>
 
 <body>
 
-<div class="navbar">
-    <div class="logo">🛒 Fashion Shop</div>
-    <a href="login.php">Login</a>
-</div>
+    <?php
+    $navbarMode = 'auth';
+    include("includes/index-navbar.php");
+    ?>
 
-<div class="container">
+    <div class="container">
 
-<div class="card">
+        <div class="card register">
 
-<div class="title">Create account</div>
-<div class="subtitle">Join us today</div>
+            <div class="title">Créer un compte</div>
+            <div class="subtitle">Rejoignez-nous</div>
 
-<form method="POST" enctype="multipart/form-data">
+            <form method="POST" enctype="multipart/form-data">
 
-<input class="input" type="text" name="firstname" placeholder="First name" required>
-<input class="input" type="text" name="lastname" placeholder="Last name" required>
-<input class="input" type="text" name="username" placeholder="Username" required>
-<input class="input" type="text" name="phone" placeholder="Phone" required>
-<input class="input" type="password" name="password" placeholder="Password" required>
+                <input class="input" type="text" name="firstname" placeholder="Prénom" required>
+                <input class="input" type="text" name="lastname" placeholder="Nom" required>
+                <input class="input" type="text" name="username" placeholder="Nom d'utilisateur" required>
+                <input class="input" type="text" name="phone" placeholder="Téléphone" required>
+                <input class="input" type="password" name="password" placeholder="Mot de passe" required>
 
-<input class="input" type="file" name="photo" required>
+                <input class="input" type="file" name="photo" required>
 
-<button class="btn">Create account</button>
+                <button class="btn">Créer le compte</button>
 
-</form>
+            </form>
 
-<div class="footer">
-Already have an account? <a href="login.php">Login</a>
-</div>
+            <div class="footer">
+                Déjà un compte ? <a href="login.php">Connexion</a>
+            </div>
 
-</div>
+        </div>
 
-</div>
+    </div>
 
 </body>
+
 </html>

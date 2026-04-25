@@ -1,0 +1,125 @@
+.navbar-custom {
+    background: #111;
+    height: 64px;
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* LOGO */
+.navbar-brand-custom {
+    color: #fff;
+    font-size: 18px;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+/* RIGHT SIDE */
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* LEFT SIDE (BACK + TITLE) */
+.nav-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* BACK BUTTON */
+.back-btn {
+    width: 34px;
+    height: 34px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    background: #1f1f22;
+    color: #fff;
+    text-decoration: none;
+    transition: 0.2s;
+}
+
+.back-btn:hover {
+    background: #333;
+    transform: scale(1.05);
+}
+
+/* LINKS (same style for login / logout / dashboard / nouveauté) */
+.btn-login{
+    font-size: 13px;
+    padding: 7px 14px;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: 0.2s;
+}
+
+.btn-login {
+    color: #ccc;
+    border: 1px solid rgba(255,255,255,0.25);
+}
+
+.btn-login:hover {
+    color: #fff;
+    background: rgba(255,255,255,0.1);
+}
+
+/* USERNAME */
+.username {
+    color: #aaa;
+    font-size: 13px;
+}
+
+/* DROPDOWN */
+.dropdown-wrap {
+    position: relative;
+}
+
+.dropdown-btn {
+    background: none;
+    border: 1px solid rgba(255,255,255,0.25);
+    color: #fff;
+    padding: 7px 14px;
+    border-radius: 6px;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.dropdown-btn:hover {
+    background: rgba(255,255,255,0.1);
+}
+
+.arrow {
+    font-size: 10px;
+}
+
+.dropdown-menu-custom {
+    display: none;
+    position: absolute;
+    top: 40px;
+    background: #1a1a1a;
+    border-radius: 8px;
+    padding: 8px;
+    min-width: 180px;
+}
+
+.dropdown-wrap:hover .dropdown-menu-custom {
+    display: block;
+}
+
+.dropdown-item-custom {
+    display: block;
+    padding: 8px;
+    color: #ddd;
+    text-decoration: none;
+    font-size: 13px;
+}
+
+.dropdown-item-custom:hover {
+    background: rgba(255,255,255,0.08);
+    color: #fff;
+}

@@ -1,0 +1,73 @@
+        body {
+            background: #f5f6fa;
+            font-family: 'Segoe UI';
+        }
+
+        /* NAVBAR */
+        .navbar {
+            background: #111;
+        }
+
+        .navbar-brand {
+            color: #fff !important;
+            font-weight: 600;
+        }
+
+        /* DASHBOARD */
+        .dashboard {
+            padding: 40px;
+        }
+
+        /* CARDS */
+        .card-box {
+            background: #fff;
+            border-radius: 14px;
+            padding: 25px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            transition: 0.3s;
+        }
+
+        .card-box:hover {
+            transform: translateY(-3px);
+        }
+
+        .card-box h2 {
+            font-size: 36px;
+            font-weight: 700;
+        }
+
+        .card-box p {
+            color: #888;
+        }
+
+        /* ACTIONS */
+        .actions {
+            margin-top: 50px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        /* BUTTON STYLE */
+        .btn-admin {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 20px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.25s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            background: linear-gradient(135deg, #111, #333);
+            color: #fff;
+            border: 1px solid #111;
+        }
+
+        .btn-admin:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            color: #fff;
+        }

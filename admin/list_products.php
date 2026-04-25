@@ -6,8 +6,15 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
     die("Accès refusé");
 }
 
-$cats = $conn->query("SELECT * FROM categories ORDER BY id DESC");
-$total = $cats->num_rows;
+/* PRODUITS */
+$products = $conn->query("
+    SELECT p.*, c.nom AS category_name 
+    FROM products p
+    LEFT JOIN categories c ON p.category_id = c.id
+    ORDER BY p.id DESC
+");
+
+$total = $products->num_rows;
 ?>
 
 <!DOCTYPE html>
@@ -15,7 +22,7 @@ $total = $cats->num_rows;
 
 <head>
     <meta charset="UTF-8">
-    <title>Gestion des Catégories</title>
+    <title>Gestion des Produits</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -31,69 +38,68 @@ $total = $cats->num_rows;
     include("../includes/navbar.php");
     ?>
 
-    <!-- MAIN -->
     <div class="main">
 
-        <!-- TOPBAR -->
         <div class="topbar">
 
-            <div class="title">Gestion des catégories</div>
+            <div class="title">Gestion des produits</div>
 
-            <!-- ➕ ADD CATEGORY -->
-            <a href="../add_category.php" class="btn-add">
+            <a href="../add_product.php" class="btn-add">
                 <i class="fa-solid fa-plus"></i>
-                Ajouter une catégorie
+                Ajouter un produit
             </a>
 
         </div>
 
-        <!-- CARD -->
         <div class="cards">
             <div class="card-box">
                 <h2><?= $total ?></h2>
-                <p>Total des catégories</p>
+                <p>Total des produits</p>
             </div>
         </div>
 
-        <!-- TABLE -->
         <div class="table-box">
 
             <table class="table align-middle">
 
                 <thead>
                     <tr>
+                        <th>Image</th>
                         <th>Nom</th>
-                        <th>Icône</th>
-                        <th>Couleur</th>
+                        <th>Prix</th>
+                        <th>Catégorie</th>
+                        <th>Description</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
 
                 <tbody>
 
-                    <?php while ($cat = $cats->fetch_assoc()): ?>
+                    <?php while ($p = $products->fetch_assoc()): ?>
                         <tr>
 
-                            <!-- NAME -->
-                            <td><strong><?= htmlspecialchars($cat['nom']) ?></strong></td>
-
-                            <!-- ICON -->
-                            <td class="icon-cell"><i class="<?= $cat['icon'] ?>"></i></td>
-
-                            <!-- COLOR -->
-                            <td class="color-cell">
-                                <span class="color-only" style="background:<?= $cat['color'] ?>"></span>
+                            <td>
+                                <img src="../<?= $p['image'] ?>" class="product-img">
                             </td>
 
-                            <!-- ACTIONS -->
+                            <td><strong><?= htmlspecialchars($p['name']) ?></strong></td>
+
+                            <td><?= $p['price'] ?> TND</td>
+
+                            <td><?= htmlspecialchars($p['category_name']) ?></td>
+
+                            <td>
+                                <?= substr(htmlspecialchars($p['description']), 0, 40) ?>...
+                            </td>
+
                             <td class="action">
 
-                                <a href="../edit_category.php?id=<?= $cat['id'] ?>" class="edit">
+                                <a href="../edit_product.php?id=<?= $p['id'] ?>" class="edit">
                                     <i class="fa fa-pen"></i>
                                 </a>
 
-                                <a href="../delete_category.php?id=<?= $cat['id'] ?>"
-                                    onclick="return confirm('Supprimer cette catégorie ?')"
+                                <a href="../delete_product.php?id=<?= $p['id'] ?>"
+                                    onclick="return confirm('Supprimer ce produit ?')"
                                     class="delete">
                                     <i class="fa fa-trash"></i>
                                 </a>

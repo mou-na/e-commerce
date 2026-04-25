@@ -1,0 +1,131 @@
+        body {
+            background: linear-gradient(135deg, #f6f7fb, #eef1f7);
+            font-family: "Segoe UI", sans-serif;
+        }
+
+        /* CENTER */
+        .page {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        /* CARD */
+        .card-box {
+            width: 480px;
+            background: #fff;
+            border-radius: 16px;
+            padding: 28px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
+            border: 1px solid #eee;
+        }
+
+        /* HEADER */
+        .header {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .header h3 {
+            font-weight: 700;
+        }
+
+        .header p {
+            font-size: 13px;
+            color: #777;
+        }
+
+        /* INPUTS */
+        .form-control,
+        select,
+        textarea {
+            border-radius: 10px;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+        }
+
+        .form-control:focus,
+        select:focus,
+        textarea:focus {
+            border-color: #6366f1;
+            box-shadow: none;
+        }
+
+        textarea {
+            resize: none;
+            height: 90px;
+        }
+
+        input[type="color"] {
+            height: 45px;
+        }
+
+        /* BUTTON */
+        .btn-submit {
+            width: 100%;
+            padding: 11px;
+            border: none;
+            border-radius: 10px;
+            background: #111;
+            color: #fff;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+
+        .btn-submit:hover {
+            background: #333;
+        }
+
+                .icon-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin: 12px 0 15px;
+        }
+
+        .icon-item {
+            font-size: 20px;
+            padding: 12px;
+            border-radius: 10px;
+            background: #f3f4f6;
+            text-align: center;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: 0.2s;
+        }
+
+        .icon-item:hover {
+            border-color: #6366f1;
+            transform: scale(1.05);
+        }
+
+        .icon-item.active {
+            border-color: #6366f1;
+            background: #eef2ff;
+            color: #4f46e5;
+        }
+
+        .btn-update {
+            width: 100%;
+            padding: 11px;
+            border: none;
+            border-radius: 10px;
+            background: #111;
+            color: #fff;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+
+        /* ERROR */
+        .error {
+            background: #fee2e2;
+            color: #b91c1c;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 13px;
+            text-align: center;
+            margin-bottom: 10px;
+        }

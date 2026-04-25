@@ -2,7 +2,7 @@
 include("config/db.php");
 session_start();
 
-if(!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin'){
+if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
     die("Access denied");
 }
 
@@ -20,9 +20,8 @@ $stmt = $conn->prepare("DELETE FROM categories WHERE id = ?");
 $stmt->bind_param("i", $id);
 
 if ($stmt->execute()) {
-    header("Location: index.php");
+    header("Location: admin/getcategorie.php");
     exit;
 } else {
     echo "Error deleting category";
 }
-?>
