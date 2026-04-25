@@ -19,10 +19,11 @@ $totalCategories = $conn->query("SELECT COUNT(*) as total FROM categories")->fet
 <title>Admin Dashboard</title>
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
 body{
-    background:#f5f5f5;
+    background:#f5f6fa;
     font-family:'Segoe UI';
 }
 
@@ -35,21 +36,27 @@ body{
     font-weight:600;
 }
 
-/* CARDS */
+/* DASHBOARD */
 .dashboard{
-    padding:30px;
+    padding:40px;
 }
 
+/* CARDS */
 .card-box{
     background:#fff;
-    border-radius:12px;
-    padding:20px;
-    box-shadow:0 5px 15px rgba(0,0,0,0.05);
+    border-radius:14px;
+    padding:25px;
+    box-shadow:0 6px 20px rgba(0,0,0,0.05);
     text-align:center;
+    transition:0.3s;
+}
+
+.card-box:hover{
+    transform:translateY(-3px);
 }
 
 .card-box h2{
-    font-size:32px;
+    font-size:36px;
     font-weight:700;
 }
 
@@ -59,35 +66,60 @@ body{
 
 /* ACTIONS */
 .actions{
-    margin-top:30px;
+    margin-top:50px;
+    display:flex;
+    justify-content:center;
+    gap:15px;
+    flex-wrap:wrap;
 }
 
+/* BASE BUTTON */
 .actions a{
-    display:inline-block;
-    margin:10px;
+    display:flex;
+    align-items:center;
+    gap:8px;
     padding:12px 20px;
-    border-radius:8px;
+    border-radius:12px;
     text-decoration:none;
     font-weight:600;
-    transition:0.2s;
+    transition:0.25s;
+    box-shadow:0 5px 15px rgba(0,0,0,0.08);
 }
 
+/* ADD CATEGORY */
 .btn-add{
-    background:#111;
+    background:linear-gradient(135deg,#111,#333);
     color:#fff;
+    border:1px solid #111;
 }
 
 .btn-add:hover{
-    background:#333;
+    transform:translateY(-3px);
+    box-shadow:0 10px 25px rgba(0,0,0,0.15);
 }
 
+/* VIEW SITE */
 .btn-view{
-    border:1px solid #ccc;
+    background:#fff;
     color:#111;
+    border:1px solid #ddd;
 }
 
 .btn-view:hover{
-    background:#eee;
+    background:#f2f2f2;
+    transform:translateY(-3px);
+}
+
+/* 🍏 APPLE BUTTON */
+.btn-apple{
+    background:linear-gradient(135deg,#000,#444);
+    color:#fff;
+    border:1px solid #000;
+}
+
+.btn-apple:hover{
+    transform:translateY(-3px);
+    box-shadow:0 10px 25px rgba(0,0,0,0.25);
 }
 </style>
 </head>
@@ -96,7 +128,9 @@ body{
 
 <!-- NAVBAR -->
 <nav class="navbar navbar-dark px-4">
-    <span class="navbar-brand">Admin Panel</span>
+    <span class="navbar-brand">
+        <i class="fa-solid fa-gauge"></i> Admin Panel
+    </span>
 
     <div>
         <span style="color:#ccc;">👤 <?= $_SESSION['username'] ?></span>
@@ -107,7 +141,7 @@ body{
 <!-- DASHBOARD -->
 <div class="container dashboard">
 
-    <h2 class="mb-4">📊 Dashboard</h2>
+    <h2 class="mb-4">📊 Dashboard Overview</h2>
 
     <div class="row g-4">
 
@@ -115,7 +149,7 @@ body{
         <div class="col-md-6">
             <div class="card-box">
                 <h2><?= $totalUsers ?></h2>
-                <p>Utilisateurs</p>
+                <p>👤 Utilisateurs</p>
             </div>
         </div>
 
@@ -123,22 +157,25 @@ body{
         <div class="col-md-6">
             <div class="card-box">
                 <h2><?= $totalCategories ?></h2>
-                <p>Catégories</p>
+                <p>📦 Catégories</p>
             </div>
         </div>
 
     </div>
 
-    <!-- ACTIONS -->
-    <div class="actions text-center">
+    <!-- ACTION BUTTONS -->
+    <div class="actions">
 
-        <a href="../add_category.php" class="btn-add">
-            ➕ Ajouter Catégorie
-        </a>
+     
 
         <a href="../index.php" class="btn-view">
-            🌐 Voir Site
+            <i class="fa-solid fa-globe"></i>
+            Voir le Site
         </a>
+
+   <a href="getcategorie.php" class="btn-apple">
+    Catégorie
+</a>
 
     </div>
 

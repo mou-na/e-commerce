@@ -312,11 +312,13 @@ if ($categorie_id > 0) {
     </div>
 </div>
         <a href="#" class="nav-link-custom">Nouveautés</a>
-        <a href="#" class="nav-link-custom">Soldes</a>
+       
       <?php if($isAdmin): ?>
-    <a href="add_category.php" class="dropdown-item-custom add-category">
-        ➕ Ajouter une catégorie
+  <?php if($isAdmin): ?>
+    <a href="admin/dashboard.php" class="nav-link-custom">
+        📊 Dashboard
     </a>
+<?php endif; ?>
     <?php endif; ?>
             <!-- ✅ ADD THIS -->
   
@@ -374,29 +376,12 @@ if ($categorie_id > 0) {
 
             </a>
 
-                <?php if($isAdmin): ?>
-        <div class="cat-actions">
-
-            <a href="edit_category.php?id=<?= (int)$cat['id'] ?>" class="icon-btn edit">
-                <i class="fa-solid fa-pen"></i>
-            </a>
-
-            <a href="delete.php?id=<?= (int)$cat['id'] ?>"
-            onclick="return confirm('Delete this category?')"
-            class="icon-btn delete">
-                <i class="fa-solid fa-trash"></i>
-            </a>
-
-        </div>
-        <?php endif; ?>
-
         </div>
 
         <?php endwhile; ?>
 
     </div>
 </div>
-
 <!-- produits ici plus tard -->
 
 <footer>
