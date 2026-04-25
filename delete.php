@@ -1,5 +1,10 @@
 <?php
 include("config/db.php");
+session_start();
+
+if(!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin'){
+    die("Access denied");
+}
 
 if (!isset($_GET['id'])) {
     header("Location: index.php");

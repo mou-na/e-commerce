@@ -13,14 +13,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $result = $stmt->get_result();
     $user = $result->fetch_assoc();
 
-    if ($user && password_verify($password, $user['password'])) {
+    if($user && password_verify($password, $user['password'])){
+
+        session_start();
+
         $_SESSION['user_id'] = $user['id'];
         $_SESSION['username'] = $user['username'];
+        $_SESSION['role'] = $user['role'];
 
-        header("Location: index.php");
+        // 🔥 REDIRECTION SELON ROLE
+        if($user['role'] === 'admin'){
+            header("Location: admin/dashboard.php");
+        } else {
+            header("Location: index.php");
+        }
         exit;
+
     } else {
-        $error = "Invalid username or password";
+        echo "Login failed";
     }
 }
 ?>

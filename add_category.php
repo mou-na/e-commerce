@@ -1,5 +1,10 @@
 <?php
 session_start();
+
+
+if(!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin'){
+    die("Access denied");
+}
 include("config/db.php");
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {

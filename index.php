@@ -1,10 +1,14 @@
 <?php
 session_start();
+
 include("config/db.php");
 
 $categorie_id = isset($_GET['categorie']) ? intval($_GET['categorie']) : 0;
 
 $cats = $conn->query("SELECT * FROM categories ORDER BY nom ASC");
+
+// 🔐 SAFE CHECK (important)
+$isAdmin = (isset($_SESSION['role']) && $_SESSION['role'] === 'admin');
 
 $cat_active = null;
 if ($categorie_id > 0) {
@@ -309,9 +313,11 @@ if ($categorie_id > 0) {
 </div>
         <a href="#" class="nav-link-custom">Nouveautés</a>
         <a href="#" class="nav-link-custom">Soldes</a>
-           <a href="add_category.php" class="dropdown-item-custom add-category">
-            ➕ Ajouter une catégorie
-        </a>
+      <?php if($isAdmin): ?>
+    <a href="add_category.php" class="dropdown-item-custom add-category">
+        ➕ Ajouter une catégorie
+    </a>
+    <?php endif; ?>
             <!-- ✅ ADD THIS -->
   
 
@@ -368,24 +374,21 @@ if ($categorie_id > 0) {
 
             </a>
 
-            <!-- ACTION BUTTONS -->
-            <div class="cat-actions">
+                <?php if($isAdmin): ?>
+        <div class="cat-actions">
 
-                <!-- EDIT ICON -->
-                <a href="edit_category.php?id=<?= (int)$cat['id'] ?>" class="icon-btn edit"
-                   title="Edit Category">
-                    <i class="fa-solid fa-pen"></i>
-                </a>
+            <a href="edit_category.php?id=<?= (int)$cat['id'] ?>" class="icon-btn edit">
+                <i class="fa-solid fa-pen"></i>
+            </a>
 
-                <!-- DELETE ICON -->
-                <a href="delete.php?id=<?= (int)$cat['id'] ?>"
-                   onclick="return confirm('Delete this category?')"
-                   class="icon-btn delete"
-                   title="Delete Category">
-                    <i class="fa-solid fa-trash"></i>
-                </a>
+            <a href="delete.php?id=<?= (int)$cat['id'] ?>"
+            onclick="return confirm('Delete this category?')"
+            class="icon-btn delete">
+                <i class="fa-solid fa-trash"></i>
+            </a>
 
-            </div>
+        </div>
+        <?php endif; ?>
 
         </div>
 
