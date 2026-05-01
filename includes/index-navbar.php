@@ -42,19 +42,30 @@ $page = basename($_SERVER['PHP_SELF']);
         <!-- ================= AUTH MODE ================= -->
         <?php if ($page === 'login.php'): ?>
             <a href="register.php" class="btn-login">S'inscrire</a>
+
         <?php elseif ($page === 'register.php'): ?>
             <a href="login.php" class="btn-login">Connexion</a>
+
         <?php endif; ?>
 
 
         <!-- ================= USER ================= -->
         <?php if (isset($_SESSION['user_id'])): ?>
+
             <span class="username">
                 <i class="fa-solid fa-user"></i>
                 <?= htmlspecialchars($_SESSION['username']) ?>
             </span>
 
             <a href="logout.php" class="btn-login">Déconnexion</a>
+
+        <?php else: ?>
+
+            <!-- LOGIN BUTTON WHEN USER NOT CONNECTED -->
+            <?php if ($page !== 'login.php' && $page !== 'register.php'): ?>
+                <a href="login.php" class="btn-login">Connexion</a>
+            <?php endif; ?>
+
         <?php endif; ?>
 
     </div>

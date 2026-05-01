@@ -93,7 +93,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             </div>
 
             <div class="preview">
-                <i class="<?= htmlspecialchars($category['icon']) ?>"></i>
+                <i id="previewIcon" class="<?= htmlspecialchars($category['icon']) ?>"></i>
                 <span>Aperçu en direct</span>
             </div>
 

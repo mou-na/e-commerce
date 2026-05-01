@@ -58,9 +58,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
 
             <!-- PREVIEW -->
-            <div class="previewC">
+            <div class="preview">
                 <i id="previewIcon" class="fa-solid fa-circle"></i>
             </div>
+
 
             <?php if (isset($error)) echo "<div class='error'>$error</div>"; ?>
 

@@ -6,7 +6,6 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
     die("Accès refusé");
 }
 
-/* GET CATEGORIES */
 $cats = $conn->query("SELECT id, nom FROM categories ORDER BY nom ASC");
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -16,7 +15,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $description = trim($_POST['description']);
     $category_id = $_POST['category_id'];
 
-    /* IMAGE UPLOAD */
     $image_name = $_FILES['image']['name'];
     $image_tmp = $_FILES['image']['tmp_name'];
 
@@ -54,6 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="css/indexnavbar.css">
     <link rel="stylesheet" href="css/add.css">
+
 </head>
 
 <body>
@@ -83,6 +82,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 <select name="category_id" class="form-control">
                     <option value="">Choisir catégorie</option>
+
                     <?php while ($cat = $cats->fetch_assoc()): ?>
                         <option value="<?= $cat['id'] ?>">
                             <?= htmlspecialchars($cat['nom']) ?>
@@ -90,12 +90,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <?php endwhile; ?>
                 </select>
 
-                <input type="file" name="image" id="imageInput" class="form-control">
-
                 <!-- IMAGE PREVIEW -->
-                <div class="previewP">
-                    <img id="previewImage" src="">
+                <div class="preview">
+                    <img id="previewImage" src="" style="display:none;">
+                    <span id="previewText">Aucune image sélectionnée</span>
                 </div>
+
+                <input type="file" name="image" id="imageInput" class="form-control">
 
                 <textarea name="description" class="form-control" placeholder="Description"></textarea>
 
@@ -110,17 +111,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <script>
         const imageInput = document.getElementById("imageInput");
         const previewImage = document.getElementById("previewImage");
+        const previewText = document.getElementById("previewText");
 
-        imageInput.addEventListener("change", () => {
-            const file = imageInput.files[0];
+        imageInput.addEventListener("change", function() {
+
+            const file = this.files[0];
 
             if (file) {
+
                 const reader = new FileReader();
-                reader.onload = (e) => {
+
+                reader.onload = function(e) {
                     previewImage.src = e.target.result;
+                    previewImage.style.display = "block";
+                    previewText.style.display = "none";
                 };
+
                 reader.readAsDataURL(file);
             }
+
         });
     </script>
 
