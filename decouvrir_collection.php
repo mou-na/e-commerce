@@ -226,7 +226,9 @@ body {
                 <div class="card-body">
                     <div class="card-title"><?php echo htmlspecialchars($p['name']); ?></div>
                     <div class="price"><?php echo $p['price']; ?> DT</div>
-                    <a href="#" class="btn">Voir produit</a>
+                    <a href="product.php?id=<?php echo $p['id']; ?>" class="btn">
+    Voir produit
+</a>
                 </div>
 
             </div>
