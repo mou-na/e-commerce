@@ -42,7 +42,7 @@ if ($categorie_id > 0) {
         <h1>Style moderne,<br><span>prix honnête.</span></h1>
         <p>T-shirts, jeans, hoodies et accessoires — tout ce qu'il faut pour ta garde-robe.</p>
         <div class="hero-btns">
-            <a href="#categories" class="btn-hero-primary">Découvrir la collection</a>
+           <a href="decouvrir_collection.php" class="btn-hero-primary">Découvrir la collection</a>
         </div>
     </div>
 
