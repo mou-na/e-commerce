@@ -97,6 +97,10 @@ body {
     background: #222;
 }
 
+.btn i {
+    margin-right: 6px;
+}
+
 /* META */
 .meta div {
     display: flex;

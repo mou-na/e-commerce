@@ -4,7 +4,7 @@ include("../config/db.php");
 
 // 🔒 SECURITY
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
-    die("Accès refusé");
+    header("Location: index.php");
 }
 
 // 📊 STATS

@@ -25,7 +25,7 @@ if ($result->num_rows == 0) {
 $product = $result->fetch_assoc();
 
 $imagePath = $product['image'];
-if (!file_exists($imagePath)) {
+if (!file_exists($imagePath) || empty($imagePath)) {
     $imagePath = "uploads/default.png";
 }
 ?>
@@ -44,17 +44,14 @@ if (!file_exists($imagePath)) {
 
 <body>
 
-    <!-- 🔥 YOUR MAIN NAVBAR -->
-    <?php
-    $navbarMode = 'default';
-    include("includes/index-navbar.php");
-    ?>
+    <?php include("includes/index-navbar.php"); ?>
 
+    <!-- PRODUCT -->
     <div class="wrapper">
 
         <!-- IMAGE -->
         <div class="product-image">
-            <img src="<?= $imagePath; ?>" alt="">
+            <img src="<?= $imagePath ?>" alt="">
         </div>
 
         <!-- INFO -->
@@ -72,7 +69,9 @@ if (!file_exists($imagePath)) {
                 <?= htmlspecialchars($product['description'] ?? "Produit premium de haute qualité."); ?>
             </div>
 
-            <button class="btn">Ajouter au panier</button>
+            <button class="btn" onclick="addToCart(<?= $product['id']; ?>)">
+                <i class="fa-solid fa-cart-plus"></i> Ajouter au panier
+            </button>
 
             <div class="meta">
                 <div><i class="fa-solid fa-truck-fast"></i> Livraison rapide</div>
@@ -83,6 +82,27 @@ if (!file_exists($imagePath)) {
         </div>
 
     </div>
+
+    <script>
+        function addToCart(id) {
+
+            fetch("add_to_cart.php", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded"
+                    },
+                    body: "id=" + id
+                })
+                .then(res => res.json())
+                .then(data => {
+
+                    if (data.status === "ok") {
+                        const counter = document.getElementById("cartCount");
+                        if (counter) counter.innerText = data.count;
+                    }
+                });
+        }
+    </script>
 
 </body>
 

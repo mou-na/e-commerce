@@ -5,14 +5,22 @@ if (session_status() === PHP_SESSION_NONE) {
 
 $isAdmin = (isset($_SESSION['role']) && $_SESSION['role'] === 'admin');
 $page = basename($_SERVER['PHP_SELF']);
+
+$cartCount = isset($_SESSION['cart'])
+    ? array_sum(array_column($_SESSION['cart'], 'qty'))
+    : 0;
 ?>
 
 <nav class="navbar-custom">
 
-    <!-- LEFT SIDE -->
+    <!-- LEFT -->
     <div class="nav-left">
 
-        <?php if ($page === 'decouvrir_collection.php' || $page === 'product.php'): ?>
+        <?php if (
+            $page === 'decouvrir_collection.php' ||
+            $page === 'product.php' ||
+            $page === 'cart.php'
+        ): ?>
             <a href="javascript:history.back()" class="back-btn">
                 <i class="fa fa-arrow-left"></i>
             </a>
@@ -24,27 +32,22 @@ $page = basename($_SERVER['PHP_SELF']);
 
     </div>
 
-    <!-- RIGHT SIDE -->
+    <!-- RIGHT -->
     <div class="nav-right">
 
-        <!-- INDEX MODE ONLY -->
-        <?php if ($page === 'index.php'): ?>
+        <!-- CART (NEW FEATURE ADDED) -->
+        <!-- CART -->
+        <?php if (!$isAdmin): ?>
+            <a href="cart.php" class="cart-icon">
+                <i class="fa-solid fa-cart-shopping"></i>
 
-            <div class="dropdown-wrap">
-                <button class="dropdown-btn">
-                    Catégories <span class="arrow">▾</span>
-                </button>
-
-                <div class="dropdown-menu-custom">
-                    <a class="dropdown-item-custom" href="index.php">
-                        Toutes les catégories
-                    </a>
-                </div>
-            </div>
-
+                <span class="cart-count" id="cartCount">
+                    <?= $cartCount ?>
+                </span>
+            </a>
         <?php endif; ?>
 
-        <!-- 🔥 BACKOFFICE ALWAYS FOR ADMIN -->
+        <!-- BACKOFFICE -->
         <?php if ($isAdmin): ?>
             <a href="admin/dashboard.php" class="btn-login">Backoffice</a>
         <?php endif; ?>
