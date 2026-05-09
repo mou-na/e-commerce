@@ -3,7 +3,7 @@ session_start();
 include("../config/db.php");
 
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
-    die("Accès refusé");
+    header("Location: ../index.php");
 }
 
 $cats = $conn->query("SELECT * FROM categories ORDER BY id DESC");

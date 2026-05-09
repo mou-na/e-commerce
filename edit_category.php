@@ -2,7 +2,7 @@
 session_start();
 
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
-    die("Accès refusé");
+    header("Location: index.php");
 }
 
 include("config/db.php");
