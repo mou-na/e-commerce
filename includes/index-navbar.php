@@ -30,8 +30,6 @@ $page = basename($_SERVER['PHP_SELF']);
                 </div>
             </div>
 
-            <a href="#" class="btn-login">Nouveautés</a>
-
             <?php if ($isAdmin): ?>
                 <a href="admin/dashboard.php" class="btn-login">Backoffice</a>
             <?php endif; ?>
