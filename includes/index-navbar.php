@@ -3,6 +3,8 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
+$conn = new mysqli("localhost", "root", "", "ecommerce");
+
 $isAdmin = (isset($_SESSION['role']) && $_SESSION['role'] === 'admin');
 $page = basename($_SERVER['PHP_SELF']);
 
@@ -30,12 +32,38 @@ $cartCount = isset($_SESSION['cart'])
             Fashion Shop
         </a>
 
+        <!-- 🔥 CATEGORY MENU -->
+    <div class="category-dropdown">
+
+    <button class="cat-btn" onclick="toggleMenu()">
+        Catégories <i class="fa fa-chevron-down"></i>
+    </button>
+
+    <div class="dropdown-menu" id="catMenu">
+
+        <a href="decouvrir_collection.php?cat=0">
+            Tous les produits
+        </a>
+
+        <?php
+        $cats = $conn->query("SELECT * FROM categories");
+
+        while ($cat = $cats->fetch_assoc()) {
+            echo '<a href="decouvrir_collection.php?cat='.$cat['id'].'">'
+                . htmlspecialchars($cat['nom']) .
+            '</a>';
+        }
+        ?>
+
+    </div>
+
+</div>
+
     </div>
 
     <!-- RIGHT -->
     <div class="nav-right">
 
-        <!-- CART (NEW FEATURE ADDED) -->
         <!-- CART -->
         <?php if (!$isAdmin): ?>
             <a href="cart.php" class="cart-icon">
@@ -79,4 +107,23 @@ $cartCount = isset($_SESSION['cart'])
         <?php endif; ?>
 
     </div>
+
 </nav>
+
+<!-- 🔥 STYLE -->
+
+
+<script>
+function toggleMenu(){
+    document.getElementById("catMenu").classList.toggle("show");
+}
+
+document.addEventListener("click", function(e){
+    let menu = document.getElementById("catMenu");
+    let btn = document.querySelector(".cat-btn");
+
+    if(!btn.contains(e.target) && !menu.contains(e.target)){
+        menu.classList.remove("show");
+    }
+});
+</script>

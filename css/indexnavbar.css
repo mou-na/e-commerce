@@ -1,3 +1,4 @@
+/* ===== NAVBAR DARK ===== */
 .navbar-custom {
     background: #111;
     height: 64px;
@@ -8,6 +9,13 @@
     font-family: 'Segoe UI', sans-serif;
 }
 
+/* LEFT / RIGHT */
+.nav-left, .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
 /* LOGO */
 .navbar-brand-custom {
     color: #fff;
@@ -16,25 +24,11 @@
     text-decoration: none;
 }
 
-/* RIGHT SIDE */
-.nav-right {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-/* LEFT SIDE (BACK + TITLE) */
-.nav-left {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
 /* BACK BUTTON */
 .back-btn {
     width: 34px;
     height: 34px;
-    display: inline-flex;
+    display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 8px;
@@ -46,19 +40,71 @@
 
 .back-btn:hover {
     background: #333;
-    transform: scale(1.05);
 }
 
-/* LINKS (same style for login / logout / dashboard / nouveauté) */
-.btn-login{
+/* ===== CATEGORY DROPDOWN ===== */
+.category-dropdown {
+    position: relative;
+}
+
+/* BUTTON */
+.cat-btn {
+    background: none;
+    border: 1px solid rgba(255,255,255,0.25);
+    color: #fff;
+    padding: 7px 14px;
+    border-radius: 6px;
+    font-size: 13px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: 0.2s;
+}
+
+.cat-btn:hover {
+    background: rgba(255,255,255,0.1);
+}
+
+/* MENU */
+.dropdown-menu {
+    position: absolute;
+    top: 45px;
+    left: 0;
+    background: #1a1a1a;
+    border-radius: 10px;
+    min-width: 220px;
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+    z-index: 999;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.dropdown-menu.show {
+    display: flex;
+}
+
+/* LINKS */
+.dropdown-menu a {
+    padding: 12px 15px;
+    text-decoration: none;
+    color: #ddd;
+    font-size: 13px;
+    transition: 0.2s;
+}
+
+.dropdown-menu a:hover {
+    background: rgba(255,255,255,0.08);
+    color: #fff;
+}
+
+/* ===== BUTTON LOGIN ===== */
+.btn-login {
     font-size: 13px;
     padding: 7px 14px;
     border-radius: 6px;
     text-decoration: none;
-    transition: 0.2s;
-}
-
-.btn-login {
     color: #ccc;
     border: 1px solid rgba(255,255,255,0.25);
 }
@@ -68,96 +114,27 @@
     background: rgba(255,255,255,0.1);
 }
 
-/* USERNAME */
+/* USER */
 .username {
     color: #aaa;
     font-size: 13px;
 }
 
-/* DROPDOWN */
-.dropdown-wrap {
-    position: relative;
-}
-
-.dropdown-btn {
-    background: none;
-    border: 1px solid rgba(255,255,255,0.25);
-    color: #fff;
-    padding: 7px 14px;
-    border-radius: 6px;
-    font-size: 13px;
-    cursor: pointer;
-}
-
-.dropdown-btn:hover {
-    background: rgba(255,255,255,0.1);
-}
-
-.arrow {
-    font-size: 10px;
-}
-
-.dropdown-menu-custom {
-    display: none;
-    position: absolute;
-    top: 40px;
-    background: #1a1a1a;
-    border-radius: 8px;
-    padding: 8px;
-    min-width: 180px;
-}
-
-.dropdown-wrap:hover .dropdown-menu-custom {
-    display: block;
-}
-
-.dropdown-item-custom {
-    display: block;
-    padding: 8px;
-    color: #ddd;
-    text-decoration: none;
-    font-size: 13px;
-}
-
-.dropdown-item-custom:hover {
-    background: rgba(255,255,255,0.08);
-    color: #fff;
-}
-
+/* ===== CART ===== */
 .cart-icon {
     position: relative;
     color: white;
     font-size: 20px;
     text-decoration: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.cart-icon i {
-    color: white;
 }
 
 .cart-count {
     position: absolute;
     top: -8px;
     right: -10px;
-
-    background: black;
+    background: red;
     color: white;
-
-    min-width: 8px;
-    height: 18px;
-    padding: 0 5px;
-
-    border-radius: 999px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
     font-size: 10px;
-    font-weight: 600;
-
-    border: 1px solid white;
+    padding: 2px 6px;
+    border-radius: 50%;
 }
