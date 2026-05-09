@@ -91,7 +91,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 </div>
 
-                <button class="btn-submit">Ajouter</button>
+                <button class="btn-submit">Ajouter catégorie</button>
 
             </form>
 

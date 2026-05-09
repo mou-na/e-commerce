@@ -8,6 +8,8 @@ $conn = new mysqli("localhost", "root", "", "ecommerce");
 $isAdmin = (isset($_SESSION['role']) && $_SESSION['role'] === 'admin');
 $page = basename($_SERVER['PHP_SELF']);
 
+$isAuthPage = ($page === 'login.php' || $page === 'register.php');
+
 $cartCount = isset($_SESSION['cart'])
     ? array_sum(array_column($_SESSION['cart'], 'qty'))
     : 0;
@@ -18,54 +20,67 @@ $cartCount = isset($_SESSION['cart'])
     <!-- LEFT -->
     <div class="nav-left">
 
+        <!-- BACK BUTTON -->
         <?php if (
             $page === 'decouvrir_collection.php' ||
             $page === 'product.php' ||
-            $page === 'cart.php'
+            $page === 'cart.php' ||
+            $page === 'checkout.php'
         ): ?>
             <a href="javascript:history.back()" class="back-btn">
                 <i class="fa fa-arrow-left"></i>
             </a>
         <?php endif; ?>
 
+        <!-- LOGO -->
         <a class="navbar-brand-custom" href="index.php">
             Fashion Shop
         </a>
 
-        <!-- 🔥 CATEGORY MENU -->
-    <div class="category-dropdown">
+        <!-- CATEGORY + PRODUITS (HIDDEN ON LOGIN/REGISTER) -->
+        <?php if (!$isAuthPage): ?>
 
-    <button class="cat-btn" onclick="toggleMenu()">
-        Catégories <i class="fa fa-chevron-down"></i>
-    </button>
+            <!-- CATEGORY DROPDOWN -->
+            <div class="category-dropdown">
 
-    <div class="dropdown-menu" id="catMenu">
+                <button class="cat-btn" onclick="toggleMenu()">
+                    Catégories <i class="fa fa-chevron-down"></i>
+                </button>
 
-        <a href="decouvrir_collection.php?cat=0">
-            Tous les produits
-        </a>
+                <div class="dropdown-menu" id="catMenu">
 
-        <?php
-        $cats = $conn->query("SELECT * FROM categories");
+                    <a href="decouvrir_collection.php?cat=0">
+                        Tous les produits
+                    </a>
 
-        while ($cat = $cats->fetch_assoc()) {
-            echo '<a href="decouvrir_collection.php?cat='.$cat['id'].'">'
-                . htmlspecialchars($cat['nom']) .
-            '</a>';
-        }
-        ?>
+                    <?php
+                    $cats = $conn->query("SELECT * FROM categories");
 
-    </div>
+                    while ($cat = $cats->fetch_assoc()) {
+                        echo '<a href="decouvrir_collection.php?cat=' . $cat['id'] . '">'
+                            . htmlspecialchars($cat['nom']) .
+                            '</a>';
+                    }
+                    ?>
 
-</div>
+                </div>
+
+            </div>
+
+            <!-- PRODUITS -->
+            <a href="decouvrir_collection.php" class="btn-login">
+                Produits
+            </a>
+
+        <?php endif; ?>
 
     </div>
 
     <!-- RIGHT -->
     <div class="nav-right">
 
-        <!-- CART -->
-        <?php if (!$isAdmin): ?>
+        <!-- CART (HIDDEN FOR ADMIN + AUTH PAGES) -->
+        <?php if (!$isAdmin && !$isAuthPage): ?>
             <a href="cart.php" class="cart-icon">
                 <i class="fa-solid fa-cart-shopping"></i>
 
@@ -80,7 +95,7 @@ $cartCount = isset($_SESSION['cart'])
             <a href="admin/dashboard.php" class="btn-login">Backoffice</a>
         <?php endif; ?>
 
-        <!-- AUTH -->
+        <!-- AUTH BUTTONS -->
         <?php if ($page === 'login.php'): ?>
             <a href="register.php" class="btn-login">S'inscrire</a>
 
@@ -88,7 +103,7 @@ $cartCount = isset($_SESSION['cart'])
             <a href="login.php" class="btn-login">Connexion</a>
         <?php endif; ?>
 
-        <!-- USER -->
+        <!-- USER INFO -->
         <?php if (isset($_SESSION['user_id'])): ?>
 
             <span class="username">
@@ -100,7 +115,7 @@ $cartCount = isset($_SESSION['cart'])
 
         <?php else: ?>
 
-            <?php if ($page !== 'login.php' && $page !== 'register.php'): ?>
+            <?php if (!$isAuthPage): ?>
                 <a href="login.php" class="btn-login">Connexion</a>
             <?php endif; ?>
 
@@ -110,20 +125,18 @@ $cartCount = isset($_SESSION['cart'])
 
 </nav>
 
-<!-- 🔥 STYLE -->
-
-
+<!-- SCRIPT -->
 <script>
-function toggleMenu(){
-    document.getElementById("catMenu").classList.toggle("show");
-}
-
-document.addEventListener("click", function(e){
-    let menu = document.getElementById("catMenu");
-    let btn = document.querySelector(".cat-btn");
-
-    if(!btn.contains(e.target) && !menu.contains(e.target)){
-        menu.classList.remove("show");
+    function toggleMenu() {
+        document.getElementById("catMenu").classList.toggle("show");
     }
-});
+
+    document.addEventListener("click", function(e) {
+        let menu = document.getElementById("catMenu");
+        let btn = document.querySelector(".cat-btn");
+
+        if (!btn.contains(e.target) && !menu.contains(e.target)) {
+            menu.classList.remove("show");
+        }
+    });
 </script>

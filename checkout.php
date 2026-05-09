@@ -33,65 +33,8 @@ foreach ($cart as $item) {
     <title>Checkout</title>
 
     <link rel="stylesheet" href="css/indexnavbar.css">
-    <style>
-        body {
-            margin: 0;
-            font-family: "Segoe UI", sans-serif;
-            background: #f8f8f8;
-        }
-
-        .container {
-            max-width: 700px;
-            margin: 60px auto;
-            background: white;
-            padding: 40px;
-            border-radius: 12px;
-        }
-
-        h1 {
-            margin-bottom: 30px;
-        }
-
-        .input-group {
-            margin-bottom: 20px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-        }
-
-        input {
-            width: 100%;
-            padding: 14px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-size: 15px;
-        }
-
-        .total {
-            margin-top: 30px;
-            font-size: 22px;
-            font-weight: 700;
-        }
-
-        button {
-            margin-top: 30px;
-            width: 100%;
-            padding: 16px;
-            border: none;
-            background: black;
-            color: white;
-            border-radius: 10px;
-            font-size: 16px;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background: #222;
-        }
-    </style>
+    <link rel="stylesheet" href="css/check.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 
 <body>
@@ -126,7 +69,7 @@ foreach ($cart as $item) {
                 Total : <?= $total ?> DT
             </div>
 
-            <button type="submit">
+            <button type="submit" class="checkout-btn">
                 Confirmer la commande
             </button>
 

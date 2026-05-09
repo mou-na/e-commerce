@@ -169,7 +169,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     <?php endwhile; ?>
                 </select>
 
-                <button class="btn-submit">Mettre à jour</button>
+                <button class="btn-update">Mettre à jour produit</button>
 
             </form>
 

@@ -131,7 +131,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 </div>
 
                 <button class="btn-update" type="submit">
-                    Mettre à jour
+                    Mettre à jour catégorie
                 </button>
 
             </form>
