@@ -158,3 +158,20 @@
     border-radius: 50%;
     border: 1px solid white;
 }
+
+.dropdown-menu a {
+    padding: 12px 15px;
+    text-decoration: none;
+    color: #ddd;
+    font-size: 13px;
+    transition: 0.2s;
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.dropdown-menu a i {
+    width: 16px;
+    text-align: center;
+}

@@ -50,6 +50,7 @@ $cartCount = isset($_SESSION['cart'])
                 <div class="dropdown-menu" id="catMenu">
 
                     <a href="decouvrir_collection.php?cat=0">
+                        <i class="fa-solid fa-layer-group"></i>
                         Tous les produits
                     </a>
 
@@ -57,9 +58,17 @@ $cartCount = isset($_SESSION['cart'])
                     $cats = $conn->query("SELECT * FROM categories");
 
                     while ($cat = $cats->fetch_assoc()) {
-                        echo '<a href="decouvrir_collection.php?cat=' . $cat['id'] . '">'
-                            . htmlspecialchars($cat['nom']) .
-                            '</a>';
+
+                        $icon = !empty($cat['icon'])
+                            ? htmlspecialchars($cat['icon'])
+                            : 'fa-solid fa-tag';
+
+                        echo '
+                <a href="decouvrir_collection.php?cat=' . $cat['id'] . '">
+                    <i class="' . $icon . '"></i>
+                    ' . htmlspecialchars($cat['nom']) . '
+                </a>
+            ';
                     }
                     ?>
 

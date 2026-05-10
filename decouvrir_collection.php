@@ -9,17 +9,21 @@ if ($conn->connect_error) {
 
 $cat_id = isset($_GET['cat']) ? intval($_GET['cat']) : 0;
 
-/* ================= CATEGORY NAME ================= */
+/* ================= CATEGORY NAME + ICON ================= */
 $cat_name = "Tous les produits";
+$cat_icon = "fa-solid fa-layer-group";
 
 if ($cat_id > 0) {
-    $stmt = $conn->prepare("SELECT nom FROM categories WHERE id = ?");
+
+    $stmt = $conn->prepare("SELECT nom, icon FROM categories WHERE id = ?");
     $stmt->bind_param("i", $cat_id);
     $stmt->execute();
+
     $res = $stmt->get_result();
 
     if ($row = $res->fetch_assoc()) {
         $cat_name = $row['nom'];
+        $cat_icon = $row['icon'];
     }
 }
 ?>
@@ -51,6 +55,7 @@ if ($cat_id > 0) {
             <h3>Catégories</h3>
 
             <a href="?cat=0" class="<?= ($cat_id == 0) ? 'active' : '' ?>">
+                <i class="fa-solid fa-layer-group"></i>
                 Tous les produits
             </a>
 
@@ -58,8 +63,14 @@ if ($cat_id > 0) {
             $cats = $conn->query("SELECT * FROM categories");
 
             while ($cat = $cats->fetch_assoc()) {
+
                 $active = ($cat_id == $cat['id']) ? "active" : "";
-                echo "<a class='$active' href='?cat=" . $cat['id'] . "'>" . htmlspecialchars($cat['nom']) . "</a>";
+
+                echo "
+                <a class='$active' href='?cat=" . $cat['id'] . "'>
+                    <i class='" . htmlspecialchars($cat['icon']) . "'></i>
+                    " . htmlspecialchars($cat['nom']) . "
+                </a>";
             }
             ?>
 
@@ -69,17 +80,30 @@ if ($cat_id > 0) {
         <div class="products">
 
             <!-- CATEGORY TITLE -->
-            <h2><?= htmlspecialchars($cat_name) ?></h2>
+            <h2 class="category-title">
+                <i class="<?= htmlspecialchars($cat_icon) ?>"></i>
+                <?= htmlspecialchars($cat_name) ?>
+            </h2>
 
             <div class="grid">
 
                 <?php
                 if ($cat_id == 0) {
-                    $result = $conn->query("SELECT * FROM products ORDER BY created_at DESC");
+
+                    $result = $conn->query("
+                        SELECT * FROM products
+                        ORDER BY created_at DESC
+                    ");
                 } else {
-                    $stmt = $conn->prepare("SELECT * FROM products WHERE category_id = ?");
+
+                    $stmt = $conn->prepare("
+                        SELECT * FROM products
+                        WHERE category_id = ?
+                    ");
+
                     $stmt->bind_param("i", $cat_id);
                     $stmt->execute();
+
                     $result = $stmt->get_result();
                 }
 
@@ -101,6 +125,7 @@ if ($cat_id > 0) {
                             </div>
 
                             <div class="card-body">
+
                                 <div class="card-title">
                                     <?= htmlspecialchars($p['name']) ?>
                                 </div>
@@ -109,7 +134,10 @@ if ($cat_id > 0) {
                                     <?= $p['price'] ?> DT
                                 </div>
 
-                                <a href="product.php?id=<?php echo $p['id']; ?>" class="btn">Voir produit</a>
+                                <a href="product.php?id=<?= $p['id']; ?>" class="btn">
+                                    <i class="fa-solid fa-eye"></i>
+                                </a>
+
                             </div>
 
                         </div>
@@ -117,6 +145,7 @@ if ($cat_id > 0) {
                 <?php
                     }
                 } else {
+
                     echo "<p class='empty'>Aucun produit trouvé</p>";
                 }
                 ?>

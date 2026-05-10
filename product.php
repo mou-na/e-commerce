@@ -96,9 +96,21 @@ if (!file_exists($imagePath) || empty($imagePath)) {
                 .then(res => res.json())
                 .then(data => {
 
+                    if (data.status === "login_required") {
+
+                        window.location.href = "login.php";
+                        return;
+                    }
+
                     if (data.status === "ok") {
+
                         const counter = document.getElementById("cartCount");
-                        if (counter) counter.innerText = data.count;
+
+                        if (counter) {
+                            counter.innerText = data.count;
+                        }
+
+
                     }
                 });
         }

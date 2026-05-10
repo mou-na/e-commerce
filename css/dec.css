@@ -118,3 +118,21 @@ body {
     color: #777;
     font-size: 18px;
 }
+
+.category-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 28px;
+    margin-bottom: 30px;
+}
+
+.category-title i {
+    font-size: 24px;
+}
+
+.sidebar a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
