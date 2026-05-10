@@ -1,11 +1,9 @@
 <?php
-session_start();
+include("config/db.php");
 
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
     header("Location: index.php");
 }
-
-include("config/db.php");
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
@@ -57,7 +55,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <p>Créer une nouvelle catégorie</p>
             </div>
 
-            <!-- PREVIEW -->
             <div class="preview">
                 <i id="previewIcon" class="fa-solid fa-circle"></i>
             </div>
@@ -69,10 +66,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 <input type="text" name="nom" class="form-control" placeholder="Nom de la catégorie">
 
-                <!-- COLOR (SAME AS EDIT) -->
-                <input type="color" name="color" id="colorInput" class="form-control" value="#4f46e5">
+                <input type="color" name="color" id="colorInput" class="form-control" value="#000000">
 
-                <!-- ICON -->
                 <input type="hidden" name="icon" id="iconInput">
 
                 <p style="font-size:13px;color:#777;margin-top:10px;">Choisir une icône</p>
@@ -104,7 +99,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         const preview = document.getElementById("previewIcon");
         const colorInput = document.getElementById("colorInput");
 
-        /* ICON SELECT */
         icons.forEach(icon => {
             icon.addEventListener("click", () => {
 
@@ -119,7 +113,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             });
         });
 
-        /* COLOR CHANGE */
         colorInput.addEventListener("input", () => {
             preview.style.color = colorInput.value;
         });

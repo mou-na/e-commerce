@@ -1,5 +1,5 @@
 <?php
-session_start();
+include("config/db.php");
 
 /* BLOCK ADMIN */
 if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin') {
@@ -19,8 +19,6 @@ if (!isset($_SESSION['user_id'])) {
 
     exit();
 }
-
-$conn = new mysqli("localhost", "root", "", "ecommerce");
 
 if ($conn->connect_error) {
     echo json_encode([

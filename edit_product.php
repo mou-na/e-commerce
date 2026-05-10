@@ -1,13 +1,10 @@
 <?php
-session_start();
+include("config/db.php");
 
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
     header("Location: index.php");
 }
 
-include("config/db.php");
-
-/* GET ID */
 if (!isset($_GET['id'])) {
     header("Location: admin/list_products.php");
     exit();
@@ -15,7 +12,6 @@ if (!isset($_GET['id'])) {
 
 $id = intval($_GET['id']);
 
-/* GET PRODUCT */
 $stmt = $conn->prepare("SELECT * FROM products WHERE id = ?");
 $stmt->bind_param("i", $id);
 $stmt->execute();
@@ -25,10 +21,8 @@ if (!$product) {
     die("Produit introuvable");
 }
 
-/* GET CATEGORIES */
 $cats = $conn->query("SELECT id, nom FROM categories ORDER BY nom ASC");
 
-/* UPDATE */
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     $name = trim($_POST['name']);
@@ -86,7 +80,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 <head>
     <meta charset="UTF-8">
-    <title>Modifier Produit</title>
+    <title>Modifier le Produit</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -94,30 +88,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <link rel="stylesheet" href="css/edit.css">
 
     <style>
-        .preview {
-            text-align: center;
-            padding: 18px;
-            border-radius: 12px;
-            background: #f8f9fb;
-            margin-bottom: 15px;
-            border: 1px solid #eee;
-            height: 180px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
         .preview img {
             max-width: 100%;
             max-height: 100%;
             width: auto;
             height: auto;
             object-fit: contain;
-        }
-
-        .preview span {
-            font-size: 12px;
-            color: #777;
         }
     </style>
 </head>
@@ -135,7 +111,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <div class="card-box">
 
             <div class="header">
-                <h3>Modifier Produit</h3>
+                <h3>Modifier le Produit</h3>
                 <p>Mettre à jour les informations du produit</p>
             </div>
 
@@ -151,7 +127,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     class="form-control"
                     value="<?= $product['price'] ?>">
 
-                <!-- IMAGE -->
+
                 <div class="preview">
                     <img id="previewImage" src="<?= $product['image'] ?>">
                 </div>

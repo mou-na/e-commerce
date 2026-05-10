@@ -1,7 +1,5 @@
 <?php
-session_start();
-
-$conn = new mysqli("localhost", "root", "", "ecommerce");
+include("config/db.php");
 
 if ($conn->connect_error) {
     die("Erreur DB");
@@ -62,7 +60,7 @@ if (!file_exists($imagePath) || empty($imagePath)) {
             </div>
 
             <div class="price">
-                <?= $product['price']; ?> DT
+                <?= $product['price']; ?> TND
             </div>
 
             <div class="description">

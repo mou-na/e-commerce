@@ -1,5 +1,4 @@
 <?php
-session_start();
 include("../config/db.php");
 
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
@@ -31,15 +30,12 @@ $total = $cats->num_rows;
     include("../includes/navbar.php");
     ?>
 
-    <!-- MAIN -->
     <div class="main">
 
-        <!-- TOPBAR -->
         <div class="topbar">
 
             <div class="title">Gestion des catégories</div>
 
-            <!-- ➕ ADD CATEGORY -->
             <a href="../add_category.php" class="btn-add">
                 <i class="fa-solid fa-plus"></i>
                 Ajouter une catégorie
@@ -47,7 +43,6 @@ $total = $cats->num_rows;
 
         </div>
 
-        <!-- CARD -->
         <div class="cards">
             <div class="card-box">
                 <h2><?= $total ?></h2>
@@ -55,7 +50,6 @@ $total = $cats->num_rows;
             </div>
         </div>
 
-        <!-- TABLE -->
         <div class="table-box">
 
             <table class="table align-middle">
@@ -74,18 +68,14 @@ $total = $cats->num_rows;
                     <?php while ($cat = $cats->fetch_assoc()): ?>
                         <tr>
 
-                            <!-- NAME -->
                             <td><strong><?= htmlspecialchars($cat['nom']) ?></strong></td>
 
-                            <!-- ICON -->
                             <td class="icon-cell"><i class="<?= $cat['icon'] ?>"></i></td>
 
-                            <!-- COLOR -->
                             <td class="color-cell">
                                 <span class="color-only" style="background:<?= $cat['color'] ?>"></span>
                             </td>
 
-                            <!-- ACTIONS -->
                             <td class="action">
 
                                 <a href="../edit_category.php?id=<?= $cat['id'] ?>" class="edit">

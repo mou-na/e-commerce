@@ -1,5 +1,4 @@
 <?php
-session_start();
 include("config/db.php");
 
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
@@ -46,12 +45,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <head>
     <meta charset="UTF-8">
-    <title>Ajouter Produit</title>
+    <title>Ajouter un Produit</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="css/indexnavbar.css">
     <link rel="stylesheet" href="css/add.css">
+
+    <style>
+        .preview img {
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+        }
+    </style>
 
 </head>
 
@@ -68,7 +77,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="card-box">
 
             <div class="header">
-                <h3>Ajouter Produit</h3>
+                <h3>Ajouter un Produit</h3>
                 <p>Créer un nouveau produit</p>
             </div>
 
@@ -90,7 +99,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <?php endwhile; ?>
                 </select>
 
-                <!-- IMAGE PREVIEW -->
                 <div class="preview">
                     <img id="previewImage" src="" style="display:none;">
                     <span id="previewText">Aucune image sélectionnée</span>

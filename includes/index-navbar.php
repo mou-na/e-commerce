@@ -1,9 +1,5 @@
 <?php
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-
-$conn = new mysqli("localhost", "root", "", "ecommerce");
+include(__DIR__ . "/../config/db.php");
 
 $isAdmin = (isset($_SESSION['role']) && $_SESSION['role'] === 'admin');
 $page = basename($_SERVER['PHP_SELF']);
@@ -17,10 +13,9 @@ $cartCount = isset($_SESSION['cart'])
 
 <nav class="navbar-custom">
 
-    <!-- LEFT -->
     <div class="nav-left">
 
-        <!-- BACK BUTTON -->
+        <!-- BACK -->
         <?php if (
             $page === 'decouvrir_collection.php' ||
             $page === 'product.php' ||
@@ -37,10 +32,10 @@ $cartCount = isset($_SESSION['cart'])
             Fashion Shop
         </a>
 
-        <!-- CATEGORY + PRODUITS (HIDDEN ON LOGIN/REGISTER) -->
+        <!-- CATEGORIE + PRODUITS -->
         <?php if (!$isAuthPage): ?>
 
-            <!-- CATEGORY DROPDOWN -->
+            <!-- CATEGORIE DROPDOWN -->
             <div class="category-dropdown">
 
                 <button class="cat-btn" onclick="toggleMenu()">
@@ -85,10 +80,9 @@ $cartCount = isset($_SESSION['cart'])
 
     </div>
 
-    <!-- RIGHT -->
     <div class="nav-right">
 
-        <!-- CART (HIDDEN FOR ADMIN + AUTH PAGES) -->
+        <!-- CART -->
         <?php if (!$isAdmin && !$isAuthPage): ?>
             <a href="cart.php" class="cart-icon">
                 <i class="fa-solid fa-cart-shopping"></i>
@@ -104,7 +98,7 @@ $cartCount = isset($_SESSION['cart'])
             <a href="admin/dashboard.php" class="btn-login">Backoffice</a>
         <?php endif; ?>
 
-        <!-- AUTH BUTTONS -->
+        <!-- AUTH -->
         <?php if ($page === 'login.php'): ?>
             <a href="register.php" class="btn-login">S'inscrire</a>
 
@@ -112,13 +106,14 @@ $cartCount = isset($_SESSION['cart'])
             <a href="login.php" class="btn-login">Connexion</a>
         <?php endif; ?>
 
-        <!-- USER INFO -->
+        <!-- USER -->
         <?php if (isset($_SESSION['user_id'])): ?>
 
             <span class="username">
                 <i class="fa-solid fa-user"></i>
-                <?= htmlspecialchars($_SESSION['username']) ?>
+                <?= htmlspecialchars($_SESSION['firstname'] ?? '') . ' ' . htmlspecialchars($_SESSION['lastname'] ?? '') ?>
             </span>
+
 
             <a href="logout.php" class="btn-login">Déconnexion</a>
 
@@ -134,7 +129,6 @@ $cartCount = isset($_SESSION['cart'])
 
 </nav>
 
-<!-- SCRIPT -->
 <script>
     function toggleMenu() {
         document.getElementById("catMenu").classList.toggle("show");

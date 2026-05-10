@@ -1,5 +1,4 @@
 <?php
-session_start();
 include("config/db.php");
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -18,6 +17,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION['user_id'] = $user['id'];
         $_SESSION['username'] = $user['username'];
         $_SESSION['role'] = $user['role'];
+        $_SESSION['firstname'] = $user['firstname'];
+        $_SESSION['lastname'] = $user['lastname'];
 
         if ($user['role'] === 'admin') {
             header("Location: admin/dashboard.php");
@@ -44,10 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <body>
 
-    <?php
-    $navbarMode = 'auth';
-    include("includes/index-navbar.php");
-    ?>
+    <?php include("includes/index-navbar.php"); ?>
     <div class="container">
 
         <div class="card login">

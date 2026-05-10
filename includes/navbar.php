@@ -1,9 +1,6 @@
 <?php
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+include(__DIR__ . "/../config/db.php");
 
-/* BACK BUTTON SYSTEM (KEEP THIS) */
 $showBack = $showBack ?? false;
 $backLink = $backLink ?? ($_SERVER['HTTP_REFERER'] ?? 'dashboard.php');
 ?>
@@ -11,13 +8,14 @@ $backLink = $backLink ?? ($_SERVER['HTTP_REFERER'] ?? 'dashboard.php');
 
     <div class="nav-left">
 
-        <!-- BACK BUTTON (only if needed) -->
+        <!-- BACK -->
         <?php if ($showBack): ?>
             <a href="<?= htmlspecialchars($backLink) ?>" class="back-btn">
                 <i class="fa fa-arrow-left"></i>
             </a>
         <?php endif; ?>
 
+        <!-- TITRE -->
         <a class="navbar-brand-custom" href="dashboard.php">
             Backoffice
         </a>
@@ -25,12 +23,12 @@ $backLink = $backLink ?? ($_SERVER['HTTP_REFERER'] ?? 'dashboard.php');
     </div>
 
     <div class="nav-right">
-
+        <!-- USER -->
         <span class="username">
             <i class="fa-solid fa-user"></i>
-            <?= htmlspecialchars($_SESSION['username'] ?? 'Admin') ?>
+            <?= htmlspecialchars(($_SESSION['firstname'] ?? '') . ' ' . ($_SESSION['lastname'] ?? 'Admin')) ?>
         </span>
-
+        <!-- AUTH -->
         <a href="../logout.php" class="btn-login">Déconnexion</a>
 
     </div>

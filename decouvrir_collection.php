@@ -1,15 +1,8 @@
 <?php
-session_start();
-
-$conn = new mysqli("localhost", "root", "", "ecommerce");
-
-if ($conn->connect_error) {
-    die("Erreur connexion DB");
-}
+include("config/db.php");
 
 $cat_id = isset($_GET['cat']) ? intval($_GET['cat']) : 0;
 
-/* ================= CATEGORY NAME + ICON ================= */
 $cat_name = "Tous les produits";
 $cat_icon = "fa-solid fa-layer-group";
 
@@ -35,21 +28,17 @@ if ($cat_id > 0) {
     <meta charset="UTF-8">
     <title>Découvrir la collection</title>
 
-    <link rel="stylesheet" href="css/dec.css">
-    <link rel="stylesheet" href="css/indexnavbar.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="css/indexnavbar.css">
+    <link rel="stylesheet" href="css/dec.css">
 </head>
 
 <body>
 
-    <?php
-    $navbarMode = 'default';
-    include("includes/index-navbar.php");
-    ?>
+    <?php include("includes/index-navbar.php"); ?>
 
     <div class="container">
 
-        <!-- ================= SIDEBAR ================= -->
         <div class="sidebar">
 
             <h3>Catégories</h3>
@@ -76,10 +65,8 @@ if ($cat_id > 0) {
 
         </div>
 
-        <!-- ================= PRODUCTS ================= -->
         <div class="products">
 
-            <!-- CATEGORY TITLE -->
             <h2 class="category-title">
                 <i class="<?= htmlspecialchars($cat_icon) ?>"></i>
                 <?= htmlspecialchars($cat_name) ?>
@@ -131,7 +118,7 @@ if ($cat_id > 0) {
                                 </div>
 
                                 <div class="price">
-                                    <?= $p['price'] ?> DT
+                                    <?= $p['price'] ?> TND
                                 </div>
 
                                 <a href="product.php?id=<?= $p['id']; ?>" class="btn">

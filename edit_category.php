@@ -1,13 +1,10 @@
 <?php
-session_start();
+include("config/db.php");
 
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
     header("Location: index.php");
 }
 
-include("config/db.php");
-
-/* GET ID */
 if (!isset($_GET['id'])) {
     header("Location: index.php");
     exit;
@@ -15,7 +12,6 @@ if (!isset($_GET['id'])) {
 
 $id = intval($_GET['id']);
 
-/* GET CATEGORY */
 $stmt = $conn->prepare("SELECT * FROM categories WHERE id = ?");
 $stmt->bind_param("i", $id);
 $stmt->execute();
@@ -26,7 +22,6 @@ if (!$category) {
     exit;
 }
 
-/* UPDATE */
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     $nom = trim($_POST['nom']);
@@ -60,14 +55,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <link rel="stylesheet" href="css/edit.css">
 
     <style>
-        .preview {
-            text-align: center;
-            padding: 18px;
-            border-radius: 12px;
-            background: #f8f9fb;
-            margin-bottom: 15px;
-        }
-
         .preview i {
             font-size: 42px;
             color: <?= htmlspecialchars($category['color']) ?>;
@@ -94,7 +81,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
             <div class="preview">
                 <i id="previewIcon" class="<?= htmlspecialchars($category['icon']) ?>"></i>
-                <span>Aperçu en direct</span>
             </div>
 
             <?php if (isset($error)) echo "<div class='error'>$error</div>"; ?>

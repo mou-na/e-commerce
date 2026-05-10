@@ -34,29 +34,22 @@ body{
     color:#777;
 }
 
-/* SAME PREVIEW */
-.preview{
-    text-align:center;
-    padding:18px;
-    border-radius:12px;
-    background:#f8f9fb;
-    margin-bottom:15px;
-    border:1px solid #eee;
-    height:180px;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    gap:10px;
+.preview {
+    text-align: center;
+    padding: 18px;
+    border-radius: 12px;
+    background: #f8f9fb;
+    margin-bottom: 15px;
+    border: 1px solid #eee;
+    height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.preview i{
-    font-size:42px;
-}
-
-.preview span{
-    font-size:12px;
-    color:#777;
+.preview span {
+    font-size: 12px;
+    color: #777;
 }
 
 .form-control,
@@ -71,7 +64,7 @@ textarea{
 .form-control:focus,
 select:focus,
 textarea:focus{
-    border-color:#6366f1;
+    border-color:#000000;
     box-shadow:none;
 }
 
@@ -98,14 +91,14 @@ input[type="color"]{
 }
 
 .icon-item:hover{
-    border-color:#6366f1;
+    border-color:#000000;
     transform:scale(1.05);
 }
 
 .icon-item.active{
-    border-color:#6366f1;
+    border-color:#000000;
     background:#eef2ff;
-    color:#4f46e5;
+    color:#000000;
 }
 
 .btn-update{

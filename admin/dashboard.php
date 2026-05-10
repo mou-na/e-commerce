@@ -1,13 +1,10 @@
 <?php
-session_start();
 include("../config/db.php");
 
-// 🔒 SECURITY
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
     header("Location: index.php");
 }
 
-// 📊 STATS
 $totalUsers = $conn->query("SELECT COUNT(*) as total FROM users")->fetch_assoc()['total'];
 $totalCategories = $conn->query("SELECT COUNT(*) as total FROM categories")->fetch_assoc()['total'];
 $totalProducts = $conn->query("SELECT COUNT(*) as total FROM products")->fetch_assoc()['total'];
@@ -30,7 +27,6 @@ $totalProducts = $conn->query("SELECT COUNT(*) as total FROM products")->fetch_a
 
     <?php include("../includes/navbar.php"); ?>
 
-    <!-- DASHBOARD -->
     <div class="container dashboard">
 
         <h2 class="mb-4">
@@ -62,7 +58,6 @@ $totalProducts = $conn->query("SELECT COUNT(*) as total FROM products")->fetch_a
 
         </div>
 
-        <!-- ACTION BUTTONS -->
         <div class="actions">
 
             <a href="../index.php" class="btn-admin">

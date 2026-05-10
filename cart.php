@@ -1,5 +1,5 @@
 <?php
-session_start();
+include("config/db.php");
 $cart = $_SESSION['cart'] ?? [];
 $total = 0;
 

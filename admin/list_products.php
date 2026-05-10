@@ -1,12 +1,10 @@
 <?php
-session_start();
 include("../config/db.php");
 
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
     header("Location: ../index.php");
 }
 
-/* PRODUITS */
 $products = $conn->query("
     SELECT p.*, c.nom AS category_name 
     FROM products p
