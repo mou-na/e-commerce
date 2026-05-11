@@ -73,16 +73,23 @@ $total = $products->num_rows;
 
                 <tbody>
 
-                    <?php while ($p = $products->fetch_assoc()): ?>
+                    <?php
+                    while ($p = $products->fetch_assoc()):
+
+                        $imagePath = $p['image'];
+                        if (!file_exists("../" . $imagePath) || empty($imagePath)) {
+                            $imagePath = "uploads/default.png";
+                        }
+                    ?>
                         <tr>
 
                             <td>
-                                <img src="../<?= $p['image'] ?>" class="product-img">
+                                <img src="../<?= htmlspecialchars($imagePath) ?>" class="product-img">
                             </td>
 
                             <td><strong><?= htmlspecialchars($p['name']) ?></strong></td>
 
-                            <td><?= $p['price'] ?> TND</td>
+                            <td><?= $p['price'] ?> DT</td>
 
                             <td><?= htmlspecialchars($p['category_name']) ?></td>
 

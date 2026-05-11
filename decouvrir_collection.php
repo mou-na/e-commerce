@@ -118,7 +118,7 @@ if ($cat_id > 0) {
                                 </div>
 
                                 <div class="price">
-                                    <?= $p['price'] ?> TND
+                                    <?= $p['price'] ?> DT
                                 </div>
 
                                 <a href="product.php?id=<?= $p['id']; ?>" class="btn">

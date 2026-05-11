@@ -1,10 +1,6 @@
 <?php
 include("config/db.php");
 
-if ($conn->connect_error) {
-    die("Erreur DB");
-}
-
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit();
@@ -30,7 +26,6 @@ foreach ($cart as $item) {
     $total += $item['price'] * $item['qty'];
 }
 
-/* INSERT COMMANDE */
 $stmt = $conn->prepare("
     INSERT INTO commande(user_id, total)
     VALUES(?, ?)
@@ -41,7 +36,6 @@ $stmt->execute();
 
 $commande_id = $conn->insert_id;
 
-/* INSERT LIGNES */
 foreach ($cart as $item) {
 
     $stmt = $conn->prepare("
@@ -61,7 +55,6 @@ foreach ($cart as $item) {
     $stmt->execute();
 }
 
-/* EMPTY CART */
 unset($_SESSION['cart']);
 ?>
 

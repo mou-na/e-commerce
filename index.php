@@ -48,18 +48,22 @@ $isAdmin = (isset($_SESSION['role']) && $_SESSION['role'] === 'admin');
         ");
 
             while ($product = $products->fetch_assoc()):
+                $imagePath = $product['image'];
+                if (!file_exists($imagePath) || empty($imagePath)) {
+                    $imagePath = "uploads/default.png";
+                }
             ?>
 
                 <div class="product-card">
 
                     <div class="product-image">
-                        <img src="<?= htmlspecialchars($product['image']) ?>" alt="product">
+                        <img src="<?= htmlspecialchars($imagePath) ?>" alt="product">
                     </div>
 
                     <div class="product-info">
                         <h3><?= htmlspecialchars($product['name']) ?></h3>
                         <p class="product-price">
-                            <?= $product['price'] ?> TND
+                            <?= $product['price'] ?> DT
                         </p>
                     </div>
 

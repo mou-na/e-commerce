@@ -16,19 +16,14 @@ if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin') {
     <meta charset="UTF-8">
     <title>Panier</title>
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="css/indexnavbar.css">
     <link rel="stylesheet" href="css/cart.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 
 <body>
 
-    <!-- ✅ KEEP YOUR OLD NAVBAR -->
-    <?php
-    $navbarMode = 'default';
-    $hideCart = true;
-    include("includes/index-navbar.php");
-    ?>
+    <?php include("includes/index-navbar.php"); ?>
 
     <div class="wrapper">
 
@@ -50,7 +45,9 @@ if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin') {
 
                 <div class="item">
 
-                    <img src="<?= $item['image'] ?>" alt="">
+                    <img src="<?= (!empty($item['image']) && substr($item['image'], -1) !== '_')
+                                    ? $item['image']
+                                    : 'uploads/default.png' ?>" alt="">
 
                     <div class="info">
                         <div class="name">

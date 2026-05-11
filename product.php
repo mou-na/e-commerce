@@ -1,10 +1,6 @@
 <?php
 include("config/db.php");
 
-if ($conn->connect_error) {
-    die("Erreur DB");
-}
-
 if (!isset($_GET['id'])) {
     die("Produit introuvable");
 }
@@ -44,15 +40,12 @@ if (!file_exists($imagePath) || empty($imagePath)) {
 
     <?php include("includes/index-navbar.php"); ?>
 
-    <!-- PRODUCT -->
     <div class="wrapper">
 
-        <!-- IMAGE -->
         <div class="product-image">
             <img src="<?= $imagePath ?>" alt="">
         </div>
 
-        <!-- INFO -->
         <div class="product-info">
 
             <div class="title">
@@ -60,16 +53,18 @@ if (!file_exists($imagePath) || empty($imagePath)) {
             </div>
 
             <div class="price">
-                <?= $product['price']; ?> TND
+                <?= $product['price']; ?> DT
             </div>
 
             <div class="description">
-                <?= htmlspecialchars($product['description'] ?? "Produit premium de haute qualité."); ?>
+                <?= htmlspecialchars($product['description']); ?>
             </div>
 
-            <button class="btn" onclick="addToCart(<?= $product['id']; ?>)">
-                <i class="fa-solid fa-cart-plus"></i> Ajouter au panier
-            </button>
+            <?php if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin'): ?>
+                <button class="btn" onclick="addToCart(<?= $product['id']; ?>)">
+                    <i class="fa-solid fa-cart-plus"></i> Ajouter au panier
+                </button>
+            <?php endif; ?>
 
             <div class="meta">
                 <div><i class="fa-solid fa-truck-fast"></i> Livraison rapide</div>
@@ -109,6 +104,11 @@ if (!file_exists($imagePath) || empty($imagePath)) {
                         }
 
 
+                    }
+
+                    if (data.status === "error") {
+                        alert(data.message);
+                        return;
                     }
                 });
         }
