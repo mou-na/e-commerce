@@ -109,7 +109,7 @@ if (!file_exists($imagePath) || empty($imagePath)) {
                     if (data.status === "error") {
                         alert(data.message);
                         return;
-                    }
+                     }
                 });
         }
     </script>
