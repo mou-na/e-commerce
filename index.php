@@ -22,8 +22,8 @@ $isAdmin = (isset($_SESSION['role']) && $_SESSION['role'] === 'admin');
     <?php include("includes/index-navbar.php"); ?>
 
     <div class="hero">
-        <h1>Style moderne,<br><span>prix honnête.</span></h1>
-        <p>T-shirts, jeans, hoodies et accessoires — tout ce qu'il faut pour ta garde-robe.</p>
+        <h1>Élégance moderne,<br><span>prix accessibles.</span></h1>
+        <p>Découvrez des pièces pensées pour allier style, confort et simplicité.</p>
 
         <div class="hero-btns">
             <a href="decouvrir_collection.php" class="btn-hero-primary">Découvrir la collection</a>
