@@ -60,10 +60,24 @@ if (!file_exists($imagePath) || empty($imagePath)) {
                 <?= htmlspecialchars($product['description']); ?>
             </div>
 
-            <?php if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin'): ?>
+            <?php if (!isset($_SESSION['user_id'])): ?>
+
+                <button class="btn" onclick="window.location.href='login.php'">
+                    <i class="fa-solid fa-cart-plus"></i> Ajouter au panier
+                </button>
+
+            <?php elseif (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
+
+                <button class="btn" disabled style="opacity:0.6; cursor:not-allowed;">
+                    <i class="fa-solid fa-cart-plus"></i> Ajouter au panier
+                </button>
+
+            <?php else: ?>
+
                 <button class="btn" onclick="addToCart(<?= $product['id']; ?>)">
                     <i class="fa-solid fa-cart-plus"></i> Ajouter au panier
                 </button>
+
             <?php endif; ?>
 
             <div class="meta">
